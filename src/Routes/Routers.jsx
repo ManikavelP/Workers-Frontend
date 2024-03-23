@@ -1,8 +1,8 @@
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import SignInPage from "../pages/LoginPage/SignInPage";
 import RegisterPage from "../pages/LoginPage/RegisterPage";
-import MyBookingsCard from "../pages/MyBookingsPage/MyBookingsCard";
-import MyBookingsPage from "../pages/MyBookingsPage/MyBookingsPage";
+import TeamPage from "../pages/TeamPage/Teampage";
+import HomePage from "../pages/HomePage/HomePage";
 
 function Routers() {
   return (
@@ -12,7 +12,9 @@ function Routers() {
           <Route path='/' element={<SignInPage/>}/>
           <Route path="/login" element={< SignInPage/>} />
           <Route path="/register" element={< RegisterPage/>} />
-          <Route path="/home" element={< MyBookingsPage/>} />
+          <Route path="/home" element={< HomePage/>} />
+          <Route path="/OurTeam" element={< TeamPage/>} />
+
 
 
 
