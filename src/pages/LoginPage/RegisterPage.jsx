@@ -1,24 +1,30 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 const RegisterPage = () => {
-  // const addData = async (data) => {
-  //   try {
-  //     const response = await axios.post(
-  //       "http://localhost:3001/CAuth/register",
-  //       data,
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     );
+  const addData = async (data) => {
+    try {
+      const response = await axios.post(
+        "https://thozhilali-backend.onrender.com/WAuth/register",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-  //     console.log(response.data);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+      if(response.status===203){
+        alert(response.data.message);
+      }
+      else{
+        console.log(response.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -35,9 +41,9 @@ const RegisterPage = () => {
     skillset: [],
     experience: "",
     customers: [],
-    hrate: "",
-    wrate: "",
-    mrate: "",
+    hrate: 50,
+    wrate: 40,
+    mrate: 30,
   });
   const [errors, setErrors] = useState({});
   const handleChange = (event) => {
@@ -121,6 +127,7 @@ const RegisterPage = () => {
     if (Object.keys(validationErrors).length === 0) {
       let abc = formData;
       setFormData(abc);
+      addData(abc);
       console.log(abc);
     }
   };
@@ -205,9 +212,9 @@ const RegisterPage = () => {
                 <option value="" className="text-gray-500 ">
                   Gender
                 </option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="others">others</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Others">others</option>
               </select>
               {errors.gender && (
                 <p className="text-red-500  text-[0.55rem]">{errors.gender}</p>
@@ -324,7 +331,7 @@ const RegisterPage = () => {
                 htmlFor="=confirmPassword"
                 className="block mb-2 text-sm font-medium text-gray-900 "
               >
-                Last Name
+                confirm Password
               </label>
 
               <input

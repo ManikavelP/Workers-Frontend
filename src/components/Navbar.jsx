@@ -3,7 +3,7 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon } from "@heroicons/react/24/outline";
 import logo from "../assets/images/logo.png";
 
-export default function Navbar() {
+export default function Navbar(prop) {
     return (
         <Disclosure as="nav" className="bg-backGround">
             {({ open }) => (
@@ -74,7 +74,7 @@ export default function Navbar() {
                                                                 : ""
                                                         }`}
                                                     >
-                                                        Your Profile
+                                                        {prop.name}
                                                     </button>
                                                 )}
                                             </Menu.Item>
@@ -82,6 +82,8 @@ export default function Navbar() {
                                             {/* Sign out item */}
                                             <Menu.Item>
                                                 {({ active }) => (
+                                                    <>
+                                                    <a href="/">
                                                     <button
                                                         type="button"
                                                         className={`block px-4 py-2 text-sm text-gray-700 ${
@@ -92,6 +94,8 @@ export default function Navbar() {
                                                     >
                                                         Sign out
                                                     </button>
+                                                    </a>
+                                                    </>
                                                 )}
                                             </Menu.Item>
                                         </Menu.Items>
