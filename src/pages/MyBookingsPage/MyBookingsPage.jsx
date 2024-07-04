@@ -1,12 +1,44 @@
 import React from "react";
 import MyBookingsCard from "./MyBookingsCard";
 import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
 
-const MyBookingsPage = () => {
-  const [isActive, setIsActive] = useState(false);
+const MyBookingsPage = (prop) => {
+  const [isActive, setIsActive] = useState(prop.status);
+  const [mybookings, setmybookings] = useState();
 
-  const toggleStatus = () => {
-    setIsActive(!isActive);
+useEffect(()=>{
+  const getData = async (data) => {
+    try {
+      const response = await axios.post(
+        "https://thozhilali-backend.onrender.com/Worker/customers",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setmybookings(response.data);
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  }
+  
+  const requestData = { name: prop.name, id: prop.iD };
+  getData(requestData);
+
+})
+
+  const toggleStatus = async() => {
+    try{
+      const response=await axios.put("https://thozhilali-backend.onrender.com/Worker/status",{id:prop.iD});
+      setIsActive(response.data.message);
+    }
+    catch(err){
+      console.log(err);
+    }
   };
   return (
     <div className="w-full h-screen bg-backGround">
@@ -54,12 +86,9 @@ const MyBookingsPage = () => {
               </tr>
             </thead>
             <tbody className="">
-              <MyBookingsCard />
-              <MyBookingsCard />
-              <MyBookingsCard />
-              <MyBookingsCard />
-              <MyBookingsCard />
-              <MyBookingsCard />
+        {mybookings && mybookings.map((item,index)=>{
+          return(<MyBookingsCard key={index} uid={item.id} wid={prop.iD}  name={item.name} phoneno={item.phone} date={item.date} skill={item.work} status={item.status}/>)
+        })}
             </tbody>
           </table>
         </div>

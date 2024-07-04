@@ -1,7 +1,32 @@
 import logo from "../../assets/images/logo.png";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import axios from "axios";
 const SignInPage = () => {
+  const navigate=useNavigate();
+  const validateIdPass = async (data) => {
+    try {
+      const response = await axios.post(
+        "https://thozhilali-backend.onrender.com/WAuth/login",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.status === 200) {
+        alert("Login successful");
+        navigate("/home", { state: { id: response.data.user._id, token: response.data.token, name:response.data.user.firstName+" "+response.data.user.lastName, status:response.data.user.status} });
+      }
+      else{
+        alert(response.data.msg);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -35,6 +60,7 @@ const SignInPage = () => {
 
     if (Object.keys(validationErrors).length === 0) {
       console.log("Form data:", formData);
+      validateIdPass(formData);
     }
   };
 
